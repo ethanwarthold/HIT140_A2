@@ -1,4 +1,6 @@
+import math
 import pandas as pd
+import statsmodels.stats.weightstats as stm
 
 sample_mf = pd.read_csv("data/sample_mf.csv")
 sample_fw = pd.read_csv("data/sample_fw.csv")
@@ -31,3 +33,28 @@ print(f"Mean:        {mean_fw:.2f}")
 print(f"Median:      {median_fw:.1f}")
 print(f"Std. Dev:    {stddev_fw:.2f}")
 print(f"Total (n):   {n_fw}")
+
+# Confidence intervals
+
+C = 95
+alpha = (100 - C) / 100
+
+ci_mf_lower, ci_mf_upper = stm._zconfint_generic(
+    mean_mf, stddev_mf / math.sqrt(n_mf),
+    alpha=alpha, alternative="two-sided"
+)
+
+ci_fw_lower, ci_fw_upper = stm._zconfint_generic(
+    mean_fw, stddev_fw / math.sqrt(n_fw),
+    alpha=alpha, alternative="two-sided"
+)
+
+mean_mf_pop = (ci_mf_lower + ci_mf_upper) / 2
+half_interval_mf = (ci_mf_upper - ci_mf_lower) / 2
+
+mean_fw_pop = (ci_fw_lower + ci_fw_upper) / 2
+half_interval_fw = (ci_fw_upper - ci_fw_lower) / 2
+
+print()
+print(f"Midfielders  {C}% CI:  {mean_mf_pop:.2f} ± {half_interval_mf:.2f}  :  {ci_mf_lower:.2f} to {ci_mf_upper:.2f}")
+print(f"Forwards     {C}% CI:  {mean_fw_pop:.2f} ± {half_interval_fw:.2f}  :  {ci_fw_lower:.2f} to {ci_fw_upper:.2f}")
