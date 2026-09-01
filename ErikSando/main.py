@@ -10,6 +10,7 @@ sample_fw = pd.read_csv("data/sample_fw.csv")
 sample_mf = sample_mf["Passing Accuracy (%)"]
 sample_fw = sample_fw["Passing Accuracy (%)"]
 
+# Descriptive statistics:
 # Find mean, median, variance, and standard deviation from the samples
 mean_mf = sample_mf.mean()
 median_mf = sample_mf.median()
@@ -35,7 +36,7 @@ print(f"Median:      {median_fw:.1f}")
 print(f"Std. Dev:    {stddev_fw:.2f}")
 print(f"Total (n):   {n_fw}")
 
-# Confidence intervals
+# Inferential statistics: confidence intervals
 
 C = 95
 alpha = (100 - C) / 100
@@ -60,9 +61,9 @@ print()
 print(f"Midfielders  {C}% CI:  {mean_mf_pop:.2f} ± {half_interval_mf:.2f}  :  {ci_mf_lower:.2f} to {ci_mf_upper:.2f}")
 print(f"Forwards     {C}% CI:  {mean_fw_pop:.2f} ± {half_interval_fw:.2f}  :  {ci_fw_lower:.2f} to {ci_fw_upper:.2f}")
 
-# two sample t-test
-# null hypothesis: same accuracy between mf and fw, mean_mf = mean_fw
-# alternative hypothesis: mean_mf != mean_fw (two sided test)
+# Inferential statistics: two sample t-test
+# Null hypothesis: same accuracy between mf and fw, mean_mf = mean_fw
+# Alternative hypothesis: mean_mf != mean_fw (two sided test)
 
 t_stats, p_value = st.ttest_ind_from_stats(
     mean_mf, stddev_mf, n_mf, mean_fw, stddev_fw, n_fw,
@@ -75,4 +76,4 @@ if p_value < 0.05:
     print("\nNull hypothesis is rejected, there is a statisically significant difference.")
 
 else:
-    print("Null hypothesis can not be rejected, there is not a statistically significant difference.")
+    print("\nNull hypothesis can not be rejected, there is not a statistically significant difference.")
