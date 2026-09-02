@@ -1,13 +1,4 @@
 """
-FIFA World Cup 2026 -- Analytic Task
-=====================================
-Focus: Goalkeeper age vs. shot-stopping performance (save percentage)
-
-Analytic question:
-    Do older goalkeepers (31+) have a different save percentage than
-    younger goalkeepers (under 31) at the FIFA World Cup 2026?
-    Excludes goalkeepers who never appeared in a match or never faced
-    a shot on target (save % undefined for them).
 
 Data source:
     FBref - Goalkeeping standard stats table for the World Cup 2026
@@ -16,6 +7,7 @@ For ease of marking this file is the "main" pipeline for:
     data_wrangling.py  -> Step 1: data wrangling
     sampling.py         -> Step 2: data preparation and sampling
     analysis.py          -> Steps 3-5: descriptives, CI, two-sample t-test
+
 """
 
 from data_wrangling import load_and_wrangle
