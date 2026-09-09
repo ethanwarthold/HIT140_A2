@@ -1,14 +1,4 @@
 """
-FIFA World Cup 2026 -- Analytic Task
-=====================================
-Focus: Goalkeeper age vs. shot-stopping performance (save percentage)
-
-Analytic question:
-    Do older goalkeepers (31+) have a different save percentage than
-    younger goalkeepers (under 31) at the FIFA World Cup 2026?
-    Excludes goalkeepers who never appeared in a match or never faced
-    a shot on target (save % undefined for them).
-
 Data source:
     FBref - Goalkeeping standard stats table for the World Cup 2026
 
@@ -29,16 +19,12 @@ CONFIDENCE_LEVEL = 0.95
 
 
 def main():
-    print("=" * 70)
-    print("STEP 1: DATA WRANGLING")
-    print("=" * 70)
+    print("\n========== DATA WRANGLING =========================\n")
     population = load_and_wrangle(RAW_FILE)
     print(f"Population after filtering (MP>=1, faced a shot): {len(population)} goalkeepers")
     population.to_csv("gk_population_clean.csv", index=False)
 
-    print("\n" + "=" * 70)
-    print("STEP 2: DATA PREPARATION AND SAMPLING")
-    print("=" * 70)
+    print("\n========== DATA PREPARATION AND SAMPLING ==========\n")
     population, sample, median_age = prepare_and_sample(
         population, SAMPLE_SIZE_PER_GROUP, RANDOM_SEED
     )
@@ -48,22 +34,16 @@ def main():
     print(sample["age_group"].value_counts().rename("sample count"))
     sample.to_csv("gk_sample.csv", index=False)
 
-    print("\n" + "=" * 70)
-    print("STEP 3: DESCRIPTIVE STATISTICS")
-    print("=" * 70)
+    print("\n========== DESCRIPTIVE STATISTICS =================\n")
     desc = descriptive_stats(sample)
     print(desc.round(2))
 
-    print("\n" + "=" * 70)
-    print("STEP 4: CONFIDENCE INTERVAL")
-    print("=" * 70)
+    print("\n========== CONFIDENCE INTERVAL ====================\n")
     n, mean, (ci_low, ci_high) = confidence_interval(sample, CONFIDENCE_LEVEL)
     print(f"n = {n}, sample mean Save% = {mean:.2f}")
     print(f"{int(CONFIDENCE_LEVEL*100)}% CI for population mean Save%: ({ci_low:.2f}, {ci_high:.2f})")
 
-    print("\n" + "=" * 70)
-    print("STEP 5: TWO-SAMPLE T-TEST")
-    print("=" * 70)
+    print("\n========== TWO-SAMPLE T-TEST ======================\n")
     result = two_sample_ttest(sample)
     print(f"Levene's test: stat={result['levene_stat']:.3f}, p={result['levene_p']:.3f} "
           f"-> {'equal' if result['levene_p'] > 0.05 else 'unequal'} variances assumed")
