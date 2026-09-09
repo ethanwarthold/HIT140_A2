@@ -26,7 +26,7 @@ conda install pandas numpy scipy
 ```
 
 # Data source:
-FBref Goalkeeping Standard Stats for FIFA World Cup '26
+FBref Goalkeeping Standard Stats for FIFA World Cup '26:
 `FBref_raw_goalkeeping_stats.csv`
 
 # python main.py
