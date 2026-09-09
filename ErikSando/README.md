@@ -10,7 +10,7 @@
   > conda install pandas scipy statsmodels
 ### Usage
   Run with
-  > python src/main.py
+  > python main.py
 ### Dataset
   The population data is saved in **data/fifa-player-dist.csv**, values taken from https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/statistics/player-statistics under the "Distribution" category.
 ### Python files
