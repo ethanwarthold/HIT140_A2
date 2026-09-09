@@ -9,7 +9,7 @@ pip install pandas numpy scipy
 ```
 
 # project structure
-
+```
 ├── main.py            
 ├── data_wrangling.py  
 ├── sampling.py         
@@ -18,6 +18,7 @@ pip install pandas numpy scipy
 	├── FBref_raw_goalkeeping_stats.csv
     ├── gk_sample.csv
     └── gk_stats.csv
+```
 
 # python main.py
 
