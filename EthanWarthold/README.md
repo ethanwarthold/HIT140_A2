@@ -6,25 +6,25 @@
 Python 3.10
 
 # install dependencies
+```
 pip install pandas numpy scipy
+```
 
 # project structure
 
-main.py
-data_wrangling.py
-analysis.py
-
-	data/
-		gk_stats.csv
-
+├── main.py            
+├── data_wrangling.py  
+├── sampling.py         
+├── analysis.py        
+└── data/
+    └── gk_stats.csv      
 ==========================================================
-python main.py
+# python main.py
 
 The script prints each step's results to the console, and writes two output files:
-	gk_population_clean.csv
-	gk_sample.csv
+	`gk_population_clean.csv`
+	`gk_sample.csv`
 	
 ==========================================================
-gk_stats.csv
-
-This is the raw FBref export for FIFA '26 goalkeeping stats
+# raw FBref export for FIFA '26 goalkeeping stats
+`gk_stats.csv`
