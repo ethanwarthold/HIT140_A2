@@ -2,6 +2,7 @@
   The python code written by Erik Sando for assessment 2 of HIT140 (2026).
 ### Python modules
   pandas, scipy, statsmodels
+  
   Installation using pip:
   > pip install pandas scipy statsmodels
   
