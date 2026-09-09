@@ -1,4 +1,5 @@
 """
+
 Data source:
     FBref - Goalkeeping standard stats table for the World Cup 2026
 
@@ -6,6 +7,7 @@ For ease of marking this file is the "main" pipeline for:
     data_wrangling.py  -> Step 1: data wrangling
     sampling.py         -> Step 2: data preparation and sampling
     analysis.py          -> Steps 3-5: descriptives, CI, two-sample t-test
+
 """
 
 from data_wrangling import load_and_wrangle

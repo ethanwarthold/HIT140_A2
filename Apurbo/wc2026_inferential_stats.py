@@ -4,11 +4,9 @@ Analytic question: On average, do teams eliminated in the group stage commit
 more fouls per match than teams that reach the knockout stage?
 
 This script covers:
-  Step 5 — Inferential statistics: Confidence Interval
-  Step 6 — Inferential statistics: Two-sample t-test
+  Inferential statistics: Confidence Interval
+  Inferential statistics: Two-sample t-test
 
-Run this AFTER wc2026_analysis.py (it reuses the same sample, same seed,
-so the numbers line up with your Step 3/4 results).
 
 Requirements: pandas, numpy, scipy
 Run:  python wc2026_inferential_stats.py
@@ -21,10 +19,7 @@ from scipy import stats
 RANDOM_SEED = 42
 SAMPLE_SIZE_PER_GROUP = 12
 
-# ---------------------------------------------------------------------------
-# Reload the same population and redraw the SAME sample (same seed = same
-# 24 teams as in wc2026_analysis.py)
-# ---------------------------------------------------------------------------
+
 df = pd.read_excel("WC2026_Fouls_RawData.xlsx", sheet_name="Data")
 df = df.dropna(subset=["Team_ID"])
 
@@ -37,9 +32,7 @@ eliminated_sample = eliminated_pop.sample(n=SAMPLE_SIZE_PER_GROUP, random_state=
 adv_vals = advanced_sample["Fouls_per_Match"].values
 elim_vals = eliminated_sample["Fouls_per_Match"].values
 
-# ---------------------------------------------------------------------------
-# STEP 5 — 95% Confidence Interval for each group's TRUE mean fouls/match
-# ---------------------------------------------------------------------------
+
 def confidence_interval(values, confidence=0.95):
     n = len(values)
     mean = np.mean(values)
@@ -67,11 +60,6 @@ print()
 print("Interpretation: we are 95% confident the TRUE average fouls-per-match")
 print("for the whole population of that group falls within its interval above.\n")
 
-# ---------------------------------------------------------------------------
-# STEP 6 — Two-sample t-test (Welch's, unequal variances assumed)
-# ---------------------------------------------------------------------------
-# H0 (null hypothesis): mean fouls/match is the SAME for Advanced and Eliminated teams
-# H1 (alternative):      mean fouls/match is DIFFERENT between the two groups
 ALPHA = 0.05
 
 t_stat, p_value = stats.ttest_ind(elim_vals, adv_vals, equal_var=False)
@@ -99,9 +87,6 @@ ttest_df = pd.DataFrame([{
     "Conclusion": conclusion,
 }])
 
-# ---------------------------------------------------------------------------
-# Save results
-# ---------------------------------------------------------------------------
 with pd.ExcelWriter("WC2026_Inferential_Stats.xlsx", engine="openpyxl") as writer:
     ci_df.to_excel(writer, sheet_name="Confidence_Intervals")
     ttest_df.to_excel(writer, sheet_name="Two_Sample_TTest", index=False)

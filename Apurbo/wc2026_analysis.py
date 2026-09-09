@@ -4,48 +4,22 @@ Analytic question: On average, do teams eliminated in the group stage commit
 more fouls per match than teams that reach the knockout stage?
 
 This script covers:
-  Step 3 — Data preparation & sampling
-  Step 4 — Descriptive statistics
+  Data preparation & sampling
+  Descriptive statistics
 
-(Steps 5-6, confidence interval + two-sample t-test, come in a later script
-once you've discussed the sampling approach with your tutor — see note below.)
-
-Requirements: pandas, numpy  (both preinstalled in most environments)
+Requirements: pandas, numpy  
 Run:  python wc2026_analysis.py
 """
 
 import pandas as pd
 import numpy as np
 
-RANDOM_SEED = 42  # fixed seed = reproducible sample every time this runs
-
-# ---------------------------------------------------------------------------
-# STEP 3a — Load the raw data (this is the ONLY step Excel was used for)
-# ---------------------------------------------------------------------------
+RANDOM_SEED = 42  
 df = pd.read_excel("WC2026_Fouls_RawData.xlsx", sheet_name="Data")
 df = df.dropna(subset=["Team_ID"])  # drops the legend rows at the bottom of the sheet
 print(f"Loaded {len(df)} teams (population).")
 print(df["Group (Advanced/Eliminated)"].value_counts(), "\n")
 
-# ---------------------------------------------------------------------------
-# STEP 3b — Define population vs sample
-# ---------------------------------------------------------------------------
-# POPULATION: all 48 teams that competed in the FIFA World Cup 2026.
-#
-# A note on "match-level" sampling: true match-by-match foul counts per team
-# (each individual match, not season totals) exist only inside FIFA/fbref's
-# individual match report pages — one per match, ~104 of them. Pulling all
-# of those reliably wasn't feasible here, so instead of inventing per-match
-# numbers, this script uses honest SIMPLE RANDOM SAMPLING of TEAMS from the
-# population of 48 — a fully standard, legitimate sampling technique that
-# satisfies the brief's "data preparation and sampling" requirement without
-# fabricating data. Mention this reasoning explicitly in your presentation.
-#
-# SAMPLE: to keep the two groups comparable and avoid just re-analysing the
-# whole population, we draw a simple random sample of 12 teams from EACH
-# group (Advanced n=12 of 32, Eliminated n=12 of 16) without replacement.
-# Using a FIXED random seed makes the sample reproducible for your teammates
-# and marker.
 
 SAMPLE_SIZE_PER_GROUP = 12
 
@@ -65,9 +39,7 @@ print("Sampled teams:")
 print(sample_df[["Team", "Group (Advanced/Eliminated)", "Fouls_per_Match"]]
       .sort_values("Group (Advanced/Eliminated)").to_string(index=False), "\n")
 
-# ---------------------------------------------------------------------------
-# STEP 4 — Descriptive statistics (on the SAMPLE, as required by the brief)
-# ---------------------------------------------------------------------------
+
 def describe_group(sample, label):
     vals = sample["Fouls_per_Match"]
     stats = {
@@ -90,9 +62,6 @@ summary = pd.DataFrame([adv_stats, elim_stats]).set_index("Group")
 print("Descriptive statistics (sample):")
 print(summary.to_string(), "\n")
 
-# ---------------------------------------------------------------------------
-# Save everything to one Excel file: sample used, and descriptive stats
-# ---------------------------------------------------------------------------
 with pd.ExcelWriter("WC2026_Sample_and_DescriptiveStats.xlsx", engine="openpyxl") as writer:
     sample_df.to_excel(writer, sheet_name="Sample_Used", index=False)
     summary.to_excel(writer, sheet_name="Descriptive_Stats")
