@@ -8,6 +8,11 @@ Python 3.10+
 pip install pandas numpy scipy
 ```
 
+# or if using anaconda prompt
+```
+conda install pandas numpy scipy
+```
+
 # project structure
 ```
 ├── main.py            
