@@ -15,8 +15,8 @@ pip install pandas numpy scipy
 ├── sampling.py         
 ├── analysis.py        
 └── data/
-    └── FBref_raw_goalkeeping_stats.csv
-    └── gk_sample.csv
+	├── FBref_raw_goalkeeping_stats.csv
+    ├── gk_sample.csv
     └── gk_stats.csv
 
 # python main.py
